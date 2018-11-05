@@ -1,0 +1,13 @@
+[  
+   {  
+      "modid":"noaispawneggs",
+      "name":"No AI Spawn Eggs",
+      "description":"Adds spawn eggs that spawn mobs with no AI.",
+      "version":"${version}",
+      "mcversion":"${mcversion}",
+      "url":"https://minecraft.curseforge.com/projects/no-ai-spawn-eggs",
+      "authorList":[  
+         "Darkhax"
+      ]
+   }
+]
