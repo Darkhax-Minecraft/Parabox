@@ -1,0 +1,30 @@
+#Content
+tile.parabox.parabox.name=Parabox
+
+#Info
+info.parabox.dimension=A temporal anomaly prevents placing this here.
+info.parabox.disconnect=Time and space have destabalized on the server. Try reconnecting in a few minutes.
+info.parabox.update.daily=You have generated another prestige point. The parabox now requires %d power.
+info.parabox.update.warn=Your Parabox device does not have enough power. You will lose %d Prestige Points if you do not provide %d power in %s.
+info.parabox.update.deactivate=Your Parabox device did not meet the power demands and deactivated. %d Prestige Points were lost. 
+info.parabox.duplicate=You already have Parabox placed in the world.
+
+#Status
+parabox.status.backup=This world has been put in a time loop. All progress in this world should be considered temporary until the time loop has closed. 
+parabox.status.power=Power: %s
+parabox.status.target=Target: %s
+parabox.status.missing=Missing: %s
+parabox.status.offline=Status: Offline
+parabox.status.cycle=Next Cycle: %s
+parabox.status.points=Points: %d
+parabox.status.unauthorized=Unauthorized User
+
+#Buttons
+parabox.button.activate=Activate
+parabox.button.deactivate=Deactivate
+parabox.button.loop.on=Loop: On
+parabox.button.loop.off=Loop: Off
+parabox.tip.activate=Click to activate the Parabox. This will start generating Prestige Points and consuming power.
+parabox.tip.deactivate=Click to deactivate the Parabox. This will stop generating Prestige Points, and all generated points will be lost.
+parabox.tip.loop.on=You have voted to reset the time loop. All players on the server with boxes need to vote for this option.
+parabox.tip.loop.off=Click this button when you are ready to initiate the loop. If you are on a server, all players with boxes must vote for this option.

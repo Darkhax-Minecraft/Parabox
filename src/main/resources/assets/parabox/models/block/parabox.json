@@ -1,0 +1,144 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"particle": "parabox:blocks/parabox",
+		"overlay": "minecraft:blocks/iron_block",
+		"overlay-side": "parabox:blocks/parabox",
+		"texture": "minecraft:blocks/portal"
+	},
+	"elements": [{
+			"from": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"to": [
+				16.0,
+				16.0,
+				16.0
+			],
+			"faces": {
+				"north": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#texture",
+					"cullface": "north"
+				},
+				"south": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#texture",
+					"cullface": "south"
+				},
+				"west": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#texture",
+					"cullface": "west"
+				},
+				"east": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#texture",
+					"cullface": "east"
+				}
+			}
+		},
+		{
+			"from": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"to": [
+				16.0,
+				16.0,
+				16.0
+			],
+			"faces": {
+				"down": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#overlay",
+					"cullface": "down",
+					"tintindex": 0.0
+				},
+				"up": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#overlay",
+					"cullface": "up",
+					"tintindex": 0.0
+				},
+				"north": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#overlay-side",
+					"cullface": "north",
+					"tintindex": 0.0
+				},
+				"south": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#overlay-side",
+					"cullface": "south",
+					"tintindex": 0.0
+				},
+				"west": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#overlay-side",
+					"cullface": "west",
+					"tintindex": 0.0
+				},
+				"east": {
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					],
+					"texture": "#overlay-side",
+					"cullface": "east",
+					"tintindex": 0.0
+				}
+			}
+		}
+	]
+}
