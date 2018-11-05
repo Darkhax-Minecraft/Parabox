@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = Parabox.MODID, name = Parabox.NAME, version = "@VERSION@", certificateFingerprint = "@FINGERPRINT@")
+@Mod(modid = Parabox.MODID, name = Parabox.NAME, version = "@VERSION@", dependencies = "required-after:bookshelf;required-after:prestige", certificateFingerprint = "@FINGERPRINT@")
 public class Parabox {
     
     public static final String MODID = "parabox";
