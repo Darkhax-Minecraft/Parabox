@@ -12,11 +12,11 @@ info.parabox.duplicate=You already have Parabox placed in the world.
 #Status
 parabox.status.backup=This world has been put in a time loop. All progress in this world should be considered temporary until the time loop has closed. 
 parabox.status.power=Power: %s
-parabox.status.target=Target: %s
-parabox.status.missing=Missing: %s
+parabox.status.target=Target Power: %s
+parabox.status.missing=Power Deficit: %s
 parabox.status.offline=Status: Offline
 parabox.status.cycle=Next Cycle: %s
-parabox.status.points=Points: %d
+parabox.status.points=Accumulated Points: %d
 parabox.status.unauthorized=Unauthorized User
 
 #Buttons
