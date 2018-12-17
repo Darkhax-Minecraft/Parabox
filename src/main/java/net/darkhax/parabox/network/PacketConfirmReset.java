@@ -41,7 +41,7 @@ public class PacketConfirmReset extends TileEntityMessage<TileEntityParabox> {
                 WorldSpaceTimeManager.saveCustomWorldData();
             }
             
-            WorldSpaceTimeManager.triggerCollapse();
+            WorldSpaceTimeManager.triggerCollapse(this.context.getServerHandler().player.getServerWorld());
         }
     }
 }

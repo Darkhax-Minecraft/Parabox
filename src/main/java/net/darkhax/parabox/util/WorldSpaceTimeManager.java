@@ -13,7 +13,10 @@ import com.jarhax.prestige.data.GlobalPrestigeData;
 import com.jarhax.prestige.data.PlayerData;
 
 import net.darkhax.parabox.Parabox;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.MinecraftException;
 import net.minecraft.world.WorldServer;
@@ -94,8 +97,13 @@ public class WorldSpaceTimeManager {
         }
     }
     
-    public static void triggerCollapse () {
+    public static void triggerCollapse (WorldServer server) {
             
+        for (EntityPlayerMP player : server.getMinecraftServer().getPlayerList().getPlayers()) {
+            
+            player.connection.disconnect(new TextComponentString("The world is collapsing!"));
+        }
+        
         if (!currentWorldData.getBackupFile().exists()) {
             
             Parabox.LOG.warn("Attempted to do a world reset, but no world backup found. This mod will not work as intended if the backup file {} is not restored.", currentWorldData.getBackupFile().getPath());
