@@ -46,6 +46,11 @@ public class ParaboxWorldData {
         this.confirmations.put(userId, data);
     }
     
+    public void removeUser(UUID userId) {
+        
+        this.confirmations.remove(userId);
+    }
+    
     public Set<Entry<UUID, ParaboxUserData>> getUserData () {
         
         return this.confirmations.entrySet();

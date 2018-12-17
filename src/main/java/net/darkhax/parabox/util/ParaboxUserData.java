@@ -10,6 +10,9 @@ public class ParaboxUserData {
     private boolean hasConfirmed;
     
     @Expose
+    private boolean isActive;
+
+    @Expose
     private BlockPos position;
     
     @Expose
@@ -19,12 +22,12 @@ public class ParaboxUserData {
         
         return points;
     }
-
+    
     public void setPoints (int points) {
         
         this.points = points;
     }
-
+    
     public boolean isHasConfirmed () {
         
         return this.hasConfirmed;
@@ -44,5 +47,14 @@ public class ParaboxUserData {
         
         this.position = position;
     }
-    
+       
+    public boolean isActive () {
+        
+        return isActive;
+    }
+
+    public void setActive (boolean isActive) {
+        
+        this.isActive = isActive;
+    }
 }

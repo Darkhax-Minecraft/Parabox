@@ -102,7 +102,6 @@ public class TileEntityParabox extends TileEntityBasicTickable {
     @Override
     public void onEntityUpdate () {
         
-        
         if ((WorldSpaceTimeManager.getWorldData() == null || !WorldSpaceTimeManager.getWorldData().getBackupFile().exists()) && this.active && (!WorldSpaceTimeManager.isSaving() && !WorldSpaceTimeManager.requireSaving())) {
             
             this.setActive(false);
@@ -194,6 +193,12 @@ public class TileEntityParabox extends TileEntityBasicTickable {
     public void setActive (boolean state) {
         
         this.active = state;
+        ParaboxUserData ownerData = WorldSpaceTimeManager.getWorldData().getUserData(this.ownerId);
+        
+        if (ownerData != null) {
+            
+            ownerData.setActive(state);
+        }
         
         if (state) {
             
@@ -205,8 +210,11 @@ public class TileEntityParabox extends TileEntityBasicTickable {
             this.generatedPoints = 0;
             this.remainingTicks = 0;
             
-            ParaboxUserData ownerData = WorldSpaceTimeManager.getWorldData().getUserData(this.ownerId);
-            ownerData.setPoints(0);
+            if (ownerData != null) {
+                
+                ownerData.setPoints(0);
+            }
+            
             WorldSpaceTimeManager.saveCustomWorldData();
         }
     }

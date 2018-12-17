@@ -16,6 +16,7 @@ import net.darkhax.parabox.Parabox;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.MinecraftException;
@@ -40,7 +41,7 @@ public class WorldSpaceTimeManager {
         return isSaving;
     }
     
-    public static boolean requireSaving() {
+    public static boolean requireSaving () {
         
         return requireSaving;
     }
@@ -74,7 +75,6 @@ public class WorldSpaceTimeManager {
                 ZipUtils.unzipFolder(currentWorldData.getBackupFile(), currentSaveRootDirectory.getParentFile());
                 currentWorldData.getBackupFile().delete();
                 
-                
                 for (Entry<UUID, ParaboxUserData> entry : currentWorldData.getUserData()) {
                     
                     final PlayerData prestigeData = GlobalPrestigeData.getPlayerData(entry.getKey());
@@ -103,7 +103,7 @@ public class WorldSpaceTimeManager {
     }
     
     public static void triggerCollapse (WorldServer server) {
-            
+        
         for (EntityPlayerMP player : server.getMinecraftServer().getPlayerList().getPlayers()) {
             
             player.connection.disconnect(new TextComponentString("The world is collapsing!"));
@@ -209,6 +209,28 @@ public class WorldSpaceTimeManager {
             
             restoreSaving();
             isSaving = false;
+        }
+        
+        boolean noActiveUsers = true;
+        
+        for (Entry<UUID, ParaboxUserData> entry : currentWorldData.getUserData()) {
+            
+            if (entry.getValue().isActive()) {
+                
+                noActiveUsers = false;
+                break;
+            }
+        }
+        
+        if (noActiveUsers && currentWorldData.getBackupFile().exists()) {
+            
+            currentWorldData.getBackupFile().delete();
+            
+            PlayerList playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList();
+            if (playerList != null) {
+                
+                playerList.sendMessage(new TextComponentTranslation("parabox.status.backup.reset"));
+            }
         }
     }
 }

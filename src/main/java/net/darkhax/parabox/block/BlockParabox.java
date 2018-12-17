@@ -26,8 +26,9 @@ public class BlockParabox extends BlockTileEntity {
     public BlockParabox() {
         
         super(Material.ROCK);
-        this.setBlockUnbreakable();
         this.setResistance(6000000.0F);
+        this.setHardness(50.0F);
+        this.setResistance(2000.0F);
         this.setSoundType(SoundType.STONE);
     }
     
@@ -38,7 +39,7 @@ public class BlockParabox extends BlockTileEntity {
     }
     
     @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    public void onBlockPlacedBy (World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         
         final TileEntityParabox parabox = getParabox(world, pos);
         
@@ -50,7 +51,7 @@ public class BlockParabox extends BlockTileEntity {
     }
     
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         
         if (!worldIn.isRemote && !WorldSpaceTimeManager.isSaving()) {
             
@@ -77,22 +78,31 @@ public class BlockParabox extends BlockTileEntity {
     @Override
     public boolean removedByPlayer (IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
         
-        return false;
-    }
-    
-    @Override
-    public boolean isFullCube(IBlockState state) {
+        final TileEntityParabox box = getParabox(world, pos);
+        
+        if (box != null && box.isOwner(player)) {
+            
+            box.setActive(false);
+            WorldSpaceTimeManager.getWorldData().removeUser(player.getUniqueID());
+            return super.removedByPlayer(state, world, pos, player, willHarvest);
+        }
         
         return false;
     }
     
     @Override
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isFullCube (IBlockState state) {
         
         return false;
     }
     
-    public static TileEntityParabox getParabox(World world, BlockPos pos) {
+    @Override
+    public boolean isOpaqueCube (IBlockState state) {
+        
+        return false;
+    }
+    
+    public static TileEntityParabox getParabox (World world, BlockPos pos) {
         
         final TileEntity tile = world.getTileEntity(pos);
         
@@ -101,8 +111,8 @@ public class BlockParabox extends BlockTileEntity {
     
     @Override
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getRenderLayer()
-    {
+    public BlockRenderLayer getRenderLayer () {
+        
         return BlockRenderLayer.TRANSLUCENT;
     }
 }
