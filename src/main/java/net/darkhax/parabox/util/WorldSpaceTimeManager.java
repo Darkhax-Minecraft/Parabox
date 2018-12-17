@@ -40,6 +40,11 @@ public class WorldSpaceTimeManager {
         return isSaving;
     }
     
+    public static boolean requireSaving() {
+        
+        return requireSaving;
+    }
+    
     public static ParaboxWorldData getWorldData () {
         
         return currentWorldData;

@@ -54,8 +54,6 @@ public class BlockParabox extends BlockTileEntity {
         
         if (!worldIn.isRemote && !WorldSpaceTimeManager.isSaving()) {
             
-            WorldSpaceTimeManager.initiateWorldBackup();
-            
             TileEntityParabox box = getParabox(worldIn, pos);
             
             if (box != null && box.isOwner(playerIn) && WorldSpaceTimeManager.getWorldData().getUserData(playerIn.getUniqueID()) == null) {
