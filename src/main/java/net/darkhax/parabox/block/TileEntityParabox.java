@@ -216,6 +216,7 @@ public class TileEntityParabox extends TileEntityBasicTickable {
             }
 
             WorldSpaceTimeManager.saveCustomWorldData();
+            WorldSpaceTimeManager.handleFailState();
         }
     }
 

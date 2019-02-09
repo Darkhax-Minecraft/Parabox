@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
 @EventBusSubscriber
 public class WorldSpaceTimeManager {
@@ -183,6 +184,11 @@ public class WorldSpaceTimeManager {
     @SubscribeEvent
     public static void serverTick (TickEvent.ServerTickEvent event) {
 
+        if (event.phase == Phase.END) {
+            
+            return;
+        }
+        
         if (requireSaving && !isSaving) {
 
             try {
@@ -207,7 +213,10 @@ public class WorldSpaceTimeManager {
             restoreSaving();
             isSaving = false;
         }
-
+    }
+    
+    public static void handleFailState() {
+        
         boolean noActiveUsers = true;
 
         for (final Entry<UUID, ParaboxUserData> entry : currentWorldData.getUserData()) {
