@@ -2,13 +2,11 @@ package net.darkhax.parabox.block;
 
 import net.darkhax.bookshelf.block.BlockTileEntity;
 import net.darkhax.parabox.Parabox;
-import net.darkhax.parabox.gui.GuiParabox;
 import net.darkhax.parabox.util.ParaboxUserData;
 import net.darkhax.parabox.util.WorldSpaceTimeManager;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,43 +20,43 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockParabox extends BlockTileEntity {
-    
-    public BlockParabox() {
-        
+
+    public BlockParabox () {
+
         super(Material.ROCK);
         this.setResistance(6000000.0F);
         this.setHardness(50.0F);
         this.setResistance(2000.0F);
         this.setSoundType(SoundType.STONE);
     }
-    
+
     @Override
     public TileEntity createNewTileEntity (World worldIn, int meta) {
-        
+
         return new TileEntityParabox();
     }
-    
+
     @Override
     public void onBlockPlacedBy (World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-        
+
         final TileEntityParabox parabox = getParabox(world, pos);
-        
+
         if (parabox != null) {
-            
+
             parabox.ownerId = placer.getUniqueID();
             parabox.ownerName = placer.getName();
         }
     }
-    
+
     @Override
     public boolean onBlockActivated (World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        
+
         if (!worldIn.isRemote && !WorldSpaceTimeManager.isSaving()) {
-            
-            TileEntityParabox box = getParabox(worldIn, pos);
-            
+
+            final TileEntityParabox box = getParabox(worldIn, pos);
+
             if (box != null && box.isOwner(playerIn) && WorldSpaceTimeManager.getWorldData().getUserData(playerIn.getUniqueID()) == null) {
-                
+
                 final ParaboxUserData data = new ParaboxUserData();
                 data.setPosition(pos);
                 data.setHasConfirmed(false);
@@ -66,53 +64,53 @@ public class BlockParabox extends BlockTileEntity {
                 WorldSpaceTimeManager.saveCustomWorldData();
             }
         }
-        
+
         else {
-            
+
             playerIn.openGui(Parabox.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
-        
+
         return true;
     }
-    
+
     @Override
     public boolean removedByPlayer (IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        
+
         final TileEntityParabox box = getParabox(world, pos);
-        
+
         if (box != null && box.isOwner(player)) {
-            
+
             box.setActive(false);
             WorldSpaceTimeManager.getWorldData().removeUser(player.getUniqueID());
             return super.removedByPlayer(state, world, pos, player, willHarvest);
         }
-        
+
         return false;
     }
-    
+
     @Override
     public boolean isFullCube (IBlockState state) {
-        
+
         return false;
     }
-    
+
     @Override
     public boolean isOpaqueCube (IBlockState state) {
-        
+
         return false;
     }
-    
+
     public static TileEntityParabox getParabox (World world, BlockPos pos) {
-        
+
         final TileEntity tile = world.getTileEntity(pos);
-        
+
         return tile instanceof TileEntityParabox ? (TileEntityParabox) tile : null;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getRenderLayer () {
-        
+
         return BlockRenderLayer.TRANSLUCENT;
     }
 }

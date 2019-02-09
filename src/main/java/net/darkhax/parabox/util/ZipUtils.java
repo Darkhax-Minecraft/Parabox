@@ -32,7 +32,7 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * Utility to Zip and Unzip nested directories recursively. Author of 1st version is:
- * 
+ *
  * @author Robin Spark circa 13.07.12
  *
  */
@@ -43,10 +43,10 @@ public class ZipUtils {
      * @param zipFile The full path of the archive to create. eg. c:/temp/archive.zip
      */
     public static void createZip (String directoryPath, String zipPath) throws IOException {
-        
+
         createZip(new File(directoryPath), new File(zipPath));
     }
-    
+
     /**
      * Creates a zip file at the specified path with the contents of the specified directory.
      * NB:
@@ -57,12 +57,12 @@ public class ZipUtils {
      * @throws IOException If anything goes wrong
      */
     public static void createZip (File directory, File zipFile) throws IOException {
-        
+
         try (FileOutputStream fOut = new FileOutputStream(zipFile); BufferedOutputStream bOut = new BufferedOutputStream(fOut); ZipArchiveOutputStream tOut = new ZipArchiveOutputStream(bOut)) {
             addFileToZip(tOut, directory, "");
         }
     }
-    
+
     /**
      * Creates a zip entry for the path specified with a name built from the base passed in and
      * the file/directory name. If the path is a directory, a recursive call is made such that
@@ -75,12 +75,12 @@ public class ZipUtils {
      * @throws IOException If anything goes wrong
      */
     private static void addFileToZip (ZipArchiveOutputStream zOut, File f, String base) throws IOException {
-        
+
         final String entryName = base + f.getName();
         final ZipArchiveEntry zipEntry = new ZipArchiveEntry(f, entryName);
-        
+
         zOut.putArchiveEntry(zipEntry);
-        
+
         if (f.isFile()) {
             try (FileInputStream fInputStream = new FileInputStream(f)) {
                 IOUtils.copy(fInputStream, zOut);
@@ -90,7 +90,7 @@ public class ZipUtils {
         else {
             zOut.closeArchiveEntry();
             final File[] children = f.listFiles();
-            
+
             if (children != null) {
                 for (final File child : children) {
                     addFileToZip(zOut, child.getAbsoluteFile(), entryName + "/");
@@ -98,7 +98,7 @@ public class ZipUtils {
             }
         }
     }
-    
+
     /**
      * Extract zip file at the specified destination path. NB:archive must consist of a single
      * root folder containing everything else
@@ -107,7 +107,7 @@ public class ZipUtils {
      * @param destinationPath path to extract zip file to. Created if it doesn't exist.
      */
     public static void extractZip (String archivePath, String destinationPath) {
-        
+
         final File archiveFile = new File(archivePath);
         File unzipDestFolder;
         try {
@@ -118,15 +118,15 @@ public class ZipUtils {
             e.printStackTrace();
         }
     }
-    
+
     public static class MyZipFile extends ZipFile implements Cloneable, AutoCloseable {
-        
-        public MyZipFile(File f) throws IOException {
-            
+
+        public MyZipFile (File f) throws IOException {
+
             super(f);
         }
     }
-    
+
     /**
      * Unzips a zip file into the given destination directory.
      *
@@ -135,19 +135,19 @@ public class ZipUtils {
      *
      */
     public static void unzipFolder (File archiveFile, File zipDestinationFolder) {
-        
+
         try (MyZipFile zipFile = new MyZipFile(archiveFile)) {
-            
+
             final Enumeration<ZipArchiveEntry> entries = zipFile.getEntries();
             while (entries.hasMoreElements()) {
                 final ZipArchiveEntry zipEntry = entries.nextElement();
-                
+
                 String name = zipEntry.getName();
                 if (zipEntry.isDirectory()) {
                     if (name.endsWith("/") || name.endsWith("\\")) {
                         name = name.substring(0, name.length() - 1);
                     }
-                    
+
                     final File newDir = new File(zipDestinationFolder, name);
                     if (!newDir.mkdirs()) {
                         throw new RuntimeException("Creation of target dir was failed, target dir: " + zipDestinationFolder + ", entity: " + name);
@@ -169,9 +169,9 @@ public class ZipUtils {
             throw new RuntimeException("Unzip failed:", e);
         }
     }
-    
+
     public static File createTargetFile (File zipDestinationFolder, String name) {
-        
+
         final File destinationFile = new File(zipDestinationFolder, name);
         if (name.endsWith(File.separator)) {
             if (!destinationFile.isDirectory() && !destinationFile.mkdirs()) {

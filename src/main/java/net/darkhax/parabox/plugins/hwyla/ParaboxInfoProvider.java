@@ -19,50 +19,50 @@ import net.minecraft.world.World;
 
 @WailaPlugin
 public class ParaboxInfoProvider implements IWailaPlugin, IWailaDataProvider {
-    
+
     @Override
     public ItemStack getWailaStack (IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        
+
         return accessor.getStack();
     }
-    
+
     @Override
     public List<String> getWailaHead (ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        
+
         return currenttip;
     }
-    
+
     @Override
     public List<String> getWailaBody (ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        
+
         final TileEntity te = accessor.getTileEntity();
-        
+
         if (te instanceof TileEntityParabox) {
-            
+
             te.readFromNBT(accessor.getNBTData());
             ((TileEntityParabox) te).getInfo(currenttip, accessor.getPlayer());
         }
-        
+
         return currenttip;
     }
-    
+
     @Override
     public List<String> getWailaTail (ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-        
+
         return currenttip;
     }
-    
+
     @Override
     public NBTTagCompound getNBTData (EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world, BlockPos pos) {
-        
+
         te.writeToNBT(tag);
-        
+
         return tag;
     }
-    
+
     @Override
     public void register (IWailaRegistrar registrar) {
-        
+
         registrar.registerBodyProvider(this, BlockParabox.class);
         registrar.registerNBTProvider(this, BlockParabox.class);
     }

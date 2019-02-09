@@ -31,55 +31,55 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = Parabox.MODID, name = Parabox.NAME, version = "@VERSION@", dependencies = "required-after:bookshelf;required-after:prestige", certificateFingerprint = "@FINGERPRINT@")
 public class Parabox {
-    
+
     public static final String MODID = "parabox";
     public static final String NAME = "Parabox";
     public static final Logger LOG = LogManager.getLogger(Parabox.NAME);
     public static final RegistryHelper REGISTRY = new RegistryHelper(MODID).enableAutoRegistration().setTab(CreativeTabs.MISC);
     public static final NetworkHandler NETWORK = new NetworkHandler(MODID);
-    
+
     private Block blockParabox;
-    
+
     @Instance(MODID)
     public static Parabox instance;
-    
+
     @EventHandler
     public void onPreInit (FMLPreInitializationEvent event) {
-        
+
         NETWORK.register(PacketActivate.class, Side.SERVER);
         NETWORK.register(PacketConfirmReset.class, Side.SERVER);
         NETWORK.register(PacketRefreshGui.class, Side.CLIENT);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-        
+
         this.blockParabox = new BlockParabox();
         REGISTRY.registerBlock(this.blockParabox, new ItemBlockParabox(this.blockParabox), "parabox");
         GameRegistry.registerTileEntity(TileEntityParabox.class, new ResourceLocation(MODID, "parabox"));
     }
-    
+
     @EventHandler
     public static void serverStart (FMLServerStartedEvent event) {
-        
+
         WorldSpaceTimeManager.onGameInstanceStart();
     }
-    
+
     @EventHandler
     public static void serverStop (FMLServerStoppedEvent event) {
-        
+
         WorldSpaceTimeManager.onGameInstanceClose();
     }
-    
+
     public static void sendMessage (EntityPlayer player, TextFormatting color, String text, Object... args) {
-        
+
         if (!player.world.isRemote) {
-            
+
             final TextComponentTranslation translation = new TextComponentTranslation(text, args);
             translation.getStyle().setColor(color);
             player.sendStatusMessage(translation, false);
         }
     }
-    
+
     public static String ticksToTime (int ticks) {
-        
+
         int i = ticks / 20;
         final int j = i / 60;
         i = i % 60;
